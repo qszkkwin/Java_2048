@@ -11,12 +11,12 @@ import java.util.Map;
 
 /**
  * 游戏棋盘绘制面板 - 使用 paintComponent 自定义绘制
- *
  * 优势：
  * - 零组件创建/销毁，通过 repaint 驱动
  * - 图片缓存，避免重复 IO
  * - 纯色回退，无素材卡也能正常显示
  */
+
 public class GameBoardPanel extends JPanel {
 
     private GameBoard board;
@@ -57,9 +57,15 @@ public class GameBoardPanel extends JPanel {
 
     public void switchSkin(String skin) {
         switch (skin) {
-            case "经典" -> backgroundPath = GameConfig.BACKGROUND_CLASSIC;
-            case "霓虹" -> backgroundPath = GameConfig.BACKGROUND_NEON;
-            case "糖果" -> backgroundPath = GameConfig.BACKGROUND_CANDY;
+            case "经典":
+                backgroundPath = GameConfig.BACKGROUND_CLASSIC;
+                break;
+            case "霓虹":
+                backgroundPath = GameConfig.BACKGROUND_NEON;
+                break;
+            case "糖果":
+                backgroundPath = GameConfig.BACKGROUND_CANDY;
+                break;
         }
         imageCache.clear();
         repaint();
@@ -145,15 +151,43 @@ public class GameBoardPanel extends JPanel {
         }
     }
 
-    // ==================== 图片加载 ====================
+// ... existing code ...
+
+    // ==================== 图片加载（优先 classpath，兼容 JAR 内运行） ====================
 
     private Image loadImage(String path) {
         return imageCache.computeIfAbsent(path, p -> {
-            ImageIcon icon = new ImageIcon(p);
-            if (icon.getIconWidth() == -1) {
-                return null; // 图片不存在
+            // 尝试1: 从 classpath 加载（适用于 JAR 内运行或 assets 在 classpath 中）
+            java.net.URL url = getClass().getResource(p);
+            if (url != null) {
+                ImageIcon icon = new ImageIcon(url);
+                if (icon.getIconWidth() != -1) {
+                    return icon.getImage();
+                }
             }
-            return icon.getImage();
+
+            // 尝试2: 从文件系统相对路径加载（去掉开头的 "/"）
+            String relativePath = p.startsWith("/") ? p.substring(1) : p;
+            ImageIcon icon = new ImageIcon(relativePath);
+            if (icon.getIconWidth() != -1) {
+                return icon.getImage();
+            }
+
+            // 尝试3: 使用当前工作目录的绝对路径（以保万全之策）
+            try {
+                String projectRoot = System.getProperty("user.dir");
+                String absolutePath = projectRoot + java.io.File.separator + relativePath.replace("/", java.io.File.separator);
+                icon = new ImageIcon(absolutePath);
+                if (icon.getIconWidth() != -1) {
+                    return icon.getImage();
+                }
+            } catch (Exception e) {
+                // 忽略异常
+            }
+
+            // 所有尝试都失败，返回 null（会使用纯色回退）
+            return null;
         });
     }
 }
+

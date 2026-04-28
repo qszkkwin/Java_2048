@@ -51,13 +51,29 @@ public class GameEngine {
      * 朝指定方向移动/合并所有方块
      * @return 棋盘是否发生变化
      */
+// ... existing code ...
     private boolean moveTiles(Direction direction) {
-        int rotationSteps = switch (direction) {
-            case LEFT -> 0;
-            case DOWN -> 1;
-            case RIGHT -> 2;
-            case UP -> 3;
-        };
+        int rotationSteps;
+        switch (direction) {
+            case UP:
+                rotationSteps = 0;
+                break;
+            case RIGHT:
+                rotationSteps = 1;
+                break;
+            case DOWN:
+                rotationSteps = 2;
+                break;
+            case LEFT:
+                rotationSteps = 3;
+                break;
+            default:
+                rotationSteps = 0;
+        }
+
+// ... existing code ...
+
+
 
         boolean changed = false;
         // 逐「列」处理：旋转后用坐标映射函数读取每一列的原始数据

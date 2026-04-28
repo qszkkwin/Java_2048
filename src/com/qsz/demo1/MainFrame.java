@@ -9,9 +9,9 @@ import java.util.Random;
 /**
  author：漆胜之
  operating_system: qsz
- time:2025/10/23 16:41
+ time:2026/2/23 16:41
  descriptive:
- 初步整合功能性代码,模块化的第一步。
+ 初步整合所有功能性代码,模块化的第一步。
  */
 
 public class MainFrame extends JFrame implements KeyListener, ActionListener {
@@ -23,7 +23,7 @@ public class MainFrame extends JFrame implements KeyListener, ActionListener {
     // 得分。
     int score = 0;
 
-    // 当前使用的背景皮肤（默认为background2.png）
+    // 当前使用的背景皮肤（默认为background.png）
     String backgroundPath = "assets/images/background1.png";
 
     // 将item对象提取到成员变量的位置，是为了扩大作用域，使得在鼠标监听的方法中可以调用。
@@ -521,8 +521,9 @@ public class MainFrame extends JFrame implements KeyListener, ActionListener {
     public void keyReleased(KeyEvent e) {
 
     }
+
     /**
-     鼠标监听，为点击创建执行对象
+     鼠标监听，为点击创建执行对象，执行更换皮肤的操作
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -531,20 +532,16 @@ public class MainFrame extends JFrame implements KeyListener, ActionListener {
             System.out.println("换肤为经典配色");
             backgroundPath = "assets/images/background1.png";
             paintView();
-            // 换肤操作
 
         }else if (e.getSource() == item2){
             System.out.println("换肤为霓虹配色");
             backgroundPath = "assets/images/background3.png";
             paintView();
-            // 换肤操作
-
 
         }else if (e.getSource() == item3){
             System.out.println("换肤为糖果配色");
             backgroundPath = "assets/images/background2.png";
             paintView();
-            // 换肤操作
         }
     }
 }

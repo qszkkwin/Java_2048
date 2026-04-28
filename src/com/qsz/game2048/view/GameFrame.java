@@ -79,13 +79,27 @@ public class GameFrame extends JFrame implements ActionListener {
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                Direction dir = switch (e.getKeyCode()) {
-                    case KeyEvent.VK_LEFT, KeyEvent.VK_A -> Direction.LEFT;
-                    case KeyEvent.VK_RIGHT, KeyEvent.VK_D -> Direction.RIGHT;
-                    case KeyEvent.VK_UP, KeyEvent.VK_W -> Direction.UP;
-                    case KeyEvent.VK_DOWN, KeyEvent.VK_S -> Direction.DOWN;
-                    default -> null;
-                };
+                Direction dir;
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_LEFT:
+                    case KeyEvent.VK_A:
+                        dir = Direction.LEFT;
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                    case KeyEvent.VK_D:
+                        dir = Direction.RIGHT;
+                        break;
+                    case KeyEvent.VK_UP:
+                    case KeyEvent.VK_W:
+                        dir = Direction.UP;
+                        break;
+                    case KeyEvent.VK_DOWN:
+                    case KeyEvent.VK_S:
+                        dir = Direction.DOWN;
+                        break;
+                    default:
+                        dir = null;
+                }
 
                 if (dir != null) {
                     engine.executeMove(dir);

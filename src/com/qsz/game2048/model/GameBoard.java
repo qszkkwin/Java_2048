@@ -100,23 +100,33 @@ public class GameBoard {
      * 坐标旋转：顺时针 90 度 * rotationSteps
      */
     public static int mapRow(int row, int col, int size, int rotationSteps) {
-        return switch (rotationSteps % 4) {
-            case 0 -> row;
-            case 1 -> col;
-            case 2 -> size - 1 - row;
-            case 3 -> size - 1 - col;
-            default -> row;
-        };
+        int step = rotationSteps % 4;
+        if (step == 0) {
+            return row;
+        } else if (step == 1) {
+            return col;
+        } else if (step == 2) {
+            return size - 1 - row;
+        } else if (step == 3) {
+            return size - 1 - col;
+        } else {
+            return row;
+        }
     }
 
     public static int mapCol(int row, int col, int size, int rotationSteps) {
-        return switch (rotationSteps % 4) {
-            case 0 -> col;
-            case 1 -> size - 1 - row;
-            case 2 -> size - 1 - col;
-            case 3 -> row;
-            default -> col;
-        };
+        int step = rotationSteps % 4;
+        if (step == 0) {
+            return col;
+        } else if (step == 1) {
+            return size - 1 - row;
+        } else if (step == 2) {
+            return size - 1 - col;
+        } else if (step == 3) {
+            return row;
+        } else {
+            return col;
+        }
     }
 
     /**

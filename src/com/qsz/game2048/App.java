@@ -13,8 +13,11 @@ import javax.swing.*;
 public class App {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
+
             GameBoard board = new GameBoard();
+
             GameEngine engine = new GameEngine(board, new RandomTileGenerator());
+
             new GameFrame(engine);
         });
     }

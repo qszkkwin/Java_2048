@@ -1,7 +1,7 @@
 package com.qsz.game2048.config;
 
 /**
- * 游戏全局常量配置
+ * 游戏全局常量配置，一些游戏参数，一旦修改，全局生效，便于后期集中统一维护。
  */
 public final class GameConfig {
 
@@ -34,8 +34,8 @@ public final class GameConfig {
     public static final int GAME_OVER_WIDTH = 300;
     public static final int GAME_OVER_HEIGHT = 40;
 
-    // ========== 图片路径 ==========
-    public static final String IMAGE_DIR = "assets/images/";
+    // ========== 图片路径（classpath 资源路径，兼容 JAR 内运行） ==========
+    public static final String IMAGE_DIR = "/assets/images/";
     public static final String BACKGROUND_CLASSIC = IMAGE_DIR + "background1.png";
     public static final String BACKGROUND_NEON = IMAGE_DIR + "background3.png";
     public static final String BACKGROUND_CANDY = IMAGE_DIR + "background2.png";
